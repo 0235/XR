@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace XrCore
 {
-    public class Class1
+    public class Test
     {
+        public string testa { get; set; }
     }
 }
