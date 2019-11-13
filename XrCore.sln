@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrCore", "XrCore\XrCore.csproj", "{588E08E9-72BB-48ED-9F89-29DB8D207B30}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrConsole", "XrConsole\XrConsole.csproj", "{FEFE5952-84CC-40B5-97C7-AA381749E2D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{588E08E9-72BB-48ED-9F89-29DB8D207B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{588E08E9-72BB-48ED-9F89-29DB8D207B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{588E08E9-72BB-48ED-9F89-29DB8D207B30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEFE5952-84CC-40B5-97C7-AA381749E2D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEFE5952-84CC-40B5-97C7-AA381749E2D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEFE5952-84CC-40B5-97C7-AA381749E2D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEFE5952-84CC-40B5-97C7-AA381749E2D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
