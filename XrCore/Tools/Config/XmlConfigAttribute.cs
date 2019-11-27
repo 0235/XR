@@ -17,7 +17,7 @@ namespace XrCore.Tools.Config
         /// </summary>
         public string FileName { get; set; }
         /// <summary>
-        /// 重读时间（毫秒）
+        /// 若文件的写入时间和内存中记录的时间不一致时，超过多少毫秒就重读
         /// </summary>
         public int ReloadTime { get; set; }
         /// <summary>

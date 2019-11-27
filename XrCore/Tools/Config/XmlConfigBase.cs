@@ -23,17 +23,17 @@ namespace XrCore.Tools.Config
             {
                 lock (LockObj)
                 {
-                    if (current != null && !NeedUpdate)
+                    if (current != default(TConfig) && !NeedReload)
                         return current;
                     else
                     {
-                        current = Load();
-                        if (current == default(TConfig))
+                        var loadedObj = Load();
+                        if (loadedObj == default(TConfig) && current == default(TConfig))
                         {
                             current = new TConfig();
                             current.SaveDefault();
-                            current.SetExpire();
                         }
+                        else current = loadedObj;
                         return current;
                     }
                 }
@@ -43,21 +43,20 @@ namespace XrCore.Tools.Config
                 current = value;
             }
         }
-        private static DateTime expire;
         [XmlIgnore]
-        protected static bool NeedUpdate
+        protected static bool NeedReload
         {
             get
             {
                 var now = DateTime.Now;
-                if (Setting.ReloadTime > 0 && expire != null && expire < now)
+                if (Setting.ReloadTime > 0 && Setting.LastWriteTime != null && Setting.Expire < now)
                 {
+                    var expire = now.AddMilliseconds(Setting.ReloadTime);
                     var fi = new FileInfo(Setting.FileName);
                     fi.Refresh();
-                    expire = fi.LastWriteTime.AddSeconds(Setting.ReloadTime);
-                    if (expire < now)
+                    if (Setting.LastWriteTime < fi.LastWriteTime)
                     {
-                        expire = now;
+                        Setting.LastWriteTime = fi.LastWriteTime;
                         return true;
                     }
                     else return false;
@@ -70,19 +69,6 @@ namespace XrCore.Tools.Config
         /// 保存为默认配置，若有初始化值，则重写该方法
         /// </summary>
         public virtual void SaveDefault() => Save();
-        private void SetExpire()
-        {
-            if (Setting.ReloadTime > 0)
-            {
-                var fi = new FileInfo(Setting.FileName);
-                if (fi.Exists)
-                {
-                    fi.Refresh();
-                    expire = fi.LastWriteTime;
-                }
-                else expire = DateTime.Now;
-            }
-        }
         /// <summary>
         /// 读取文件 ，若无文件则返回null
         /// </summary>
@@ -106,7 +92,11 @@ namespace XrCore.Tools.Config
         {
             if (fileName.IsNullOrWhiteSpace()) fileName = Setting.FileName;
             var stream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            return XmlHelper.Instance.ToXml(current, stream: stream);
+            var result = XmlHelper.Instance.ToXml(current, stream: stream);
+            var fi = new FileInfo(Setting.FileName);
+            fi.Refresh();
+            Setting.LastWriteTime = fi.LastWriteTime;
+            return result;
         }
         public override string ToString() => XmlHelper.Instance.ToXml(current);
         #region 文件配置
@@ -120,23 +110,38 @@ namespace XrCore.Tools.Config
             /// </summary>
             public static string FileName { get; set; }
             /// <summary>
-            /// 重新加载时间。单位:毫秒
+            /// 允许重新加载的时间。单位:毫秒
             /// </summary>
-            public static int ReloadTime { get; set; } = 0;
+            public static int ReloadTime { get; set; }
+            /// <summary>
+            /// 内存中记录的写入时间
+            /// </summary>
+            public static DateTime LastWriteTime { get; set; }
+            /// <summary>
+            /// 若当前时间超过这个，则视为可重新加载
+            /// </summary>
+            public static DateTime Expire { get; set; }
             /// <summary>
             /// 初始Setting
             /// </summary>
             static Setting()
             {
                 var type = typeof(TConfig);
+                FileName = $"Config\\{type.Name}.Config";
                 var att = type.GetCustomAttribute<XmlConfigAttribute>();
                 if (att != null)
                 {
-                    if (FileName.IsNullOrEmpty())
-                        FileName = $"Config\\{type.Name}.Config";
+                    if (!att.FileName.IsNullOrEmpty()) FileName = att.FileName;
+                    if (att.ReloadTime > 0)
+                    {
+                        ReloadTime = att.ReloadTime;
+                        Expire = DateTime.Now.AddMilliseconds(ReloadTime);
+                    }
                     else
-                        FileName = att.FileName;
-                    ReloadTime = att.ReloadTime;
+                    {
+                        ReloadTime = 0;
+                        Expire = DateTime.Now;
+                    }
                 }
             }
         }

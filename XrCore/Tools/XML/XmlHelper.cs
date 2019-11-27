@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using XrCore.Extends;
-using XrCore.Pattern;
+using XrCore.SingleBase.Pattern;
 
 namespace XrCore.Tools.XML
 {

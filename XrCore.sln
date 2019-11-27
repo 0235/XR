@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrCore", "XrCore\XrCore.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrConsole", "XrConsole\XrConsole.csproj", "{FEFE5952-84CC-40B5-97C7-AA381749E2D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrCore.Component.NLog", "XrCore.Component.NLog\XrCore.Component.NLog.csproj", "{E52F0EA9-9AC6-43E0-AF4C-EA6212A0410E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{FEFE5952-84CC-40B5-97C7-AA381749E2D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEFE5952-84CC-40B5-97C7-AA381749E2D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEFE5952-84CC-40B5-97C7-AA381749E2D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E52F0EA9-9AC6-43E0-AF4C-EA6212A0410E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E52F0EA9-9AC6-43E0-AF4C-EA6212A0410E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E52F0EA9-9AC6-43E0-AF4C-EA6212A0410E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E52F0EA9-9AC6-43E0-AF4C-EA6212A0410E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
